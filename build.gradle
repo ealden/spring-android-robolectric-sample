@@ -1,0 +1,69 @@
+description = 'Spring Android Robolectric Sample Project'
+abbreviation = 'SAR'
+version = '1.0.0.BUILD-SNAPSHOT'
+
+buildscript {
+    repositories {
+        mavenRepo name: 'gradle-android-plugin', urls: 'http://maven.teamcodeflux.com/external/'
+    }
+
+    def gradleAndroidPluginVersion = '1.1.0-SNAPSHOT'
+
+    dependencies {
+        classpath "com.jvoegele.gradle.plugins:android-plugin:$gradleAndroidPluginVersion"
+    }
+}
+
+apply plugin: 'android'
+apply plugin: 'idea'
+
+def compatibilityVersion = 1.6
+sourceCompatibility = compatibilityVersion
+targetCompatibility = compatibilityVersion
+
+repositories {
+    mavenCentral()
+    mavenRepo urls: 'http://maven.springframework.org/milestone'
+}
+
+def springAndroidVersion = '1.0.0.M4'
+def jacksonMapperVersion = '1.8.5'
+
+def junitVersion = '4.10'
+def robolectricVersion = '1.0'
+def androidVersion = '2.2.1'
+
+dependencies {
+    compile "org.springframework.android:spring-android-rest-template:$springAndroidVersion"
+    compile "org.codehaus.jackson:jackson-mapper-asl:$jacksonMapperVersion"
+//    compile "org.slf4j:slf4j-api:1.6.4"
+//    compile "org.slf4j:slf4j-simple:1.6.4"
+    testCompile("com.google.android:android:$androidVersion") {
+        provided = true
+    }
+    testCompile "com.pivotallabs:robolectric:$robolectricVersion"
+    testCompile "junit:junit:$junitVersion"
+}
+
+clean {
+    delete 'gen'
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+    project {
+        jdkName = 'Android 2.1-update1 Platform'
+        languageLevel = compatibilityVersion
+    }
+}
+
+androidEmulatorStart {
+	avdName = '2.1'
+}
+
+androidProcessResources.dependsOn(clean)
+
+defaultTasks 'assemble'
