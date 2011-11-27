@@ -1,0 +1,38 @@
+description = 'Spring Android Robolectric Sample Project'
+abbreviation = 'SARSERVER'
+version = '1.0.0.BUILD-SNAPSHOT'
+
+apply plugin: 'java'
+apply plugin: 'war'
+apply plugin: 'jetty'
+apply plugin: 'idea'
+
+def compatibilityVersion = 1.6
+sourceCompatibility = compatibilityVersion
+targetCompatibility = compatibilityVersion
+
+repositories {
+    mavenCentral()
+}
+
+def sitebricksVersion = '0.8.5'
+
+def junitVersion = '4.10'
+
+dependencies {
+	compile "com.google.sitebricks:sitebricks:$sitebricksVersion"
+    testCompile "junit:junit:$junitVersion"
+}
+
+idea {
+    module {
+        downloadSources = true
+        downloadJavadoc = true
+    }
+    project {
+        jdkName = '1.6'
+        languageLevel = compatibilityVersion
+    }
+}
+
+defaultTasks 'jettyRun'
