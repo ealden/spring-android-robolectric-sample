@@ -1,3 +1,9 @@
 local.properties
 .gradle
 build
+gen
+out
+*.ipr
+*.iml
+*.iws
+*.idea
