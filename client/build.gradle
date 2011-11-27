@@ -1,10 +1,10 @@
 description = 'Spring Android Robolectric Sample Project'
-abbreviation = 'SAR'
+abbreviation = 'SARCLIENT'
 version = '1.0.0.BUILD-SNAPSHOT'
 
 buildscript {
     repositories {
-        mavenRepo name: 'gradle-android-plugin', urls: 'http://maven.teamcodeflux.com/external/'
+        mavenRepo urls: 'http://maven.teamcodeflux.com/external/'
     }
 
     def gradleAndroidPluginVersion = '1.1.0-SNAPSHOT'
@@ -36,8 +36,6 @@ def androidVersion = '2.2.1'
 dependencies {
     compile "org.springframework.android:spring-android-rest-template:$springAndroidVersion"
     compile "org.codehaus.jackson:jackson-mapper-asl:$jacksonMapperVersion"
-//    compile "org.slf4j:slf4j-api:1.6.4"
-//    compile "org.slf4j:slf4j-simple:1.6.4"
     testCompile("com.google.android:android:$androidVersion") {
         provided = true
     }
