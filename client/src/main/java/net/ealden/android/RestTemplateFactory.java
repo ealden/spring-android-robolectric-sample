@@ -9,11 +9,21 @@ import java.util.ArrayList;
 import java.util.List;
 
 public final class RestTemplateFactory {
+    private static RestTemplate restTemplate;
+
     private RestTemplateFactory() throws Exception {
         throw new IllegalAccessException();
     }
 
     public static RestTemplate getRestTemplate() {
+        if (RestTemplateFactory.restTemplate != null) {
+            return restTemplate;
+        }
+
+        return createRestTemplate();
+    }
+
+    private static RestTemplate createRestTemplate() {
         RestTemplate restTemplate = new RestTemplate();
         restTemplate.setMessageConverters(messageConverters());
 
@@ -26,5 +36,9 @@ public final class RestTemplateFactory {
         messageConverters.add(new StringHttpMessageConverter());
 
         return messageConverters;
+    }
+
+    public static void setRestTemplate(RestTemplate restTemplate) {
+        RestTemplateFactory.restTemplate = restTemplate;
     }
 }
