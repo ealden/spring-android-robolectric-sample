@@ -24,16 +24,21 @@ targetCompatibility = compatibilityVersion
 repositories {
     mavenCentral()
     mavenRepo urls: 'http://maven.springframework.org/milestone'
+    mavenRepo urls: 'http://repository.excilys.com/content/repositories/releases'
 }
 
 def springAndroidVersion = '1.0.0.M4'
 def jacksonMapperVersion = '1.8.5'
+def androidAnnotationsVersion = '2.1.2'
 
 def junitVersion = '4.10'
 def robolectricVersion = '1.0'
 def androidVersion = '2.2.1'
 
 dependencies {
+    compile("com.googlecode.androidannotations:androidannotations:$androidAnnotationsVersion:api") {
+        exclude module: 'codemodel'
+    }
     compile "org.springframework.android:spring-android-rest-template:$springAndroidVersion"
     compile "org.codehaus.jackson:jackson-mapper-asl:$jacksonMapperVersion"
     testCompile("com.google.android:android:$androidVersion") {
@@ -47,6 +52,32 @@ clean {
     delete 'gen'
 }
 
+compileJava {
+    doFirst {
+        mkdir destinationDir
+        Map otherArgs = [
+                includeAntRuntime: false,
+                destdir: destinationDir,
+                classpath: configurations.compile.asPath,
+                sourcepath: '',
+                target: targetCompatibility,
+                source: sourceCompatibility
+        ]
+        options.compilerArgs = [
+                '-processor', 'com.googlecode.androidannotations.AndroidAnnotationProcessor',
+                '-s', "${destinationDir.absolutePath}".toString(),
+                '-processorpath', "lib/androidannotations-${androidAnnotationsVersion}.jar"
+        ]
+        Map antOptions = otherArgs + options.optionMap()
+        ant.javac(antOptions) {
+            source.addToAntBuilder(ant, 'src', FileCollection.AntType.MatchingTask)
+            options.compilerArgs.each {value ->
+                compilerarg(value: value)
+            }
+        }
+    }
+}
+
 idea {
     module {
         downloadSources = true
@@ -55,6 +86,29 @@ idea {
     project {
         jdkName = 'Android 2.1-update1 Platform'
         languageLevel = compatibilityVersion
+
+        ipr {
+            withXml { provider ->
+                def compilerConfiguration = provider.node.component.find {
+                    it.@name == 'CompilerConfiguration'
+                }
+
+                def annotationProcessing = compilerConfiguration.annotationProcessing[0]
+                annotationProcessing.@enabled = true
+                annotationProcessing.@useClasspath = false
+                annotationProcessing.appendNode('processorPath', [
+                        value: "\$PROJECT_DIR\$/lib/androidannotations-${androidAnnotationsVersion}.jar"
+                ])
+                annotationProcessing.appendNode('processor', [
+                        name: 'com.googlecode.androidannotations.AndroidAnnotationProcessor',
+                        options: ''
+                ])
+                annotationProcessing.appendNode('processModule', [
+                        name: 'client',
+                        generatedDirName: 'gen'
+                ])
+            }
+        }
     }
 }
 
