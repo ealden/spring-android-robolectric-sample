@@ -4,7 +4,9 @@ version = '1.0.0.BUILD-SNAPSHOT'
 
 buildscript {
     repositories {
-        mavenRepo urls: 'http://maven.teamcodeflux.com/external/'
+        maven {
+            url 'http://maven.teamcodeflux.com/external/'
+        }
     }
 
     def gradleAndroidPluginVersion = '1.1.0-SNAPSHOT'
@@ -23,8 +25,12 @@ targetCompatibility = compatibilityVersion
 
 repositories {
     mavenCentral()
-    mavenRepo urls: 'http://maven.springframework.org/milestone'
-    mavenRepo urls: 'http://repository.excilys.com/content/repositories/releases'
+    maven {
+        url 'http://maven.springframework.org/milestone'
+    }
+    maven {
+        url 'http://repository.excilys.com/content/repositories/releases'
+    }
 }
 
 def springAndroidVersion = '1.0.0.M4'
@@ -115,7 +121,7 @@ idea {
 }
 
 androidEmulatorStart {
-	avdName = '2.1'
+    avdName = '2.1'
 }
 
 androidProcessResources.dependsOn(clean)
