@@ -126,4 +126,8 @@ androidEmulatorStart {
 
 androidProcessResources.dependsOn(clean)
 
+task wrapper(type: Wrapper) {
+    gradleVersion = '1.0-milestone-6'
+}
+
 defaultTasks 'assemble'
