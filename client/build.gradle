@@ -35,7 +35,7 @@ repositories {
 
 def springAndroidVersion = '1.0.0.M4'
 def jacksonMapperVersion = '1.8.5'
-def androidAnnotationsVersion = '2.1.2'
+def androidAnnotationsVersion = '2.2'
 
 def junitVersion = '4.10'
 def robolectricVersion = '1.0'
