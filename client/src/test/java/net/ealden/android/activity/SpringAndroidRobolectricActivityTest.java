@@ -43,6 +43,8 @@ public class SpringAndroidRobolectricActivityTest {
 
         activity.callWebService();
 
+        System.out.println("DONE unit test");
+
         assertThat(outputArea.getText().toString(), is(equalTo(message)));
         verify(restTemplate).getForObject(anyString(), eq(String.class));
     }

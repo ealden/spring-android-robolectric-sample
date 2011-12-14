@@ -36,6 +36,8 @@ public class SpringAndroidRobolectricActivity extends Activity {
             Log.e(TAG, "Unable to connect to webservice", e);
         }
 
+        System.out.println("DONE retrieveData()");
+
         displayData(result);
     }
 
