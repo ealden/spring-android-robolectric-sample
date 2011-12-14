@@ -41,6 +41,7 @@ def junitVersion = '4.10'
 def robolectricVersion = '1.0'
 def androidVersion = '2.1.2'
 def mockitoVersion = '1.8.5'
+def awaitilityVersion = '1.3.3'
 
 dependencies {
     compile("com.googlecode.androidannotations:androidannotations:$androidAnnotationsVersion:api") {
@@ -54,6 +55,7 @@ dependencies {
     testCompile "com.pivotallabs:robolectric:$robolectricVersion"
     testCompile "junit:junit:$junitVersion"
     testCompile "org.mockito:mockito-all:$mockitoVersion"
+    testCompile "com.jayway.awaitility:awaitility:$awaitilityVersion"
 }
 
 clean {
