@@ -43,7 +43,7 @@ public class SpringAndroidRobolectricActivity extends Activity {
 
     @UiThread
     void displayData(final String result) {
-        if (result == null) {
+        if (result != null) {
             outputArea.setText(result);
         } else {
             Toast.makeText(SpringAndroidRobolectricActivity.this, "Unable to connect to webservice.", Toast.LENGTH_LONG).show();
