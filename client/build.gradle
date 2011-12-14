@@ -86,7 +86,7 @@ idea {
         downloadJavadoc = true
     }
     project {
-        jdkName = 'Android 2.1-update1 Platform'
+        jdkName = 'Android 2.1 Platform'
         languageLevel = compatibilityVersion
 
         ipr {
