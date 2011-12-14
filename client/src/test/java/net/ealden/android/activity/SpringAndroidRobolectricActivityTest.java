@@ -9,6 +9,9 @@ import org.junit.Test;
 import org.junit.runner.RunWith;
 import org.springframework.web.client.RestTemplate;
 
+import java.util.concurrent.Callable;
+
+import static com.jayway.awaitility.Awaitility.*;
 import static net.ealden.android.RestTemplateFactory.*;
 import static org.hamcrest.CoreMatchers.*;
 import static org.junit.Assert.*;
@@ -36,12 +39,19 @@ public class SpringAndroidRobolectricActivityTest {
     }
 
     @Test
-    public void shouldReplaceOutputAreaTextWhenWebServiceIsCalled() {
+    public void shouldReplaceOutputAreaTextWhenWebServiceIsCalled() throws Exception {
         String message = "Hello, world!";
 
         when(restTemplate.getForObject(anyString(), eq(String.class))).thenReturn(message);
 
         activity.callWebService();
+
+        await().until(new Callable<Boolean>() {
+            @Override
+            public Boolean call() throws Exception {
+                return outputArea.getText().length() > 0;
+            }
+        });
 
         System.out.println("DONE unit test");
 
