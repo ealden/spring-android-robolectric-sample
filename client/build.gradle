@@ -39,7 +39,7 @@ def androidAnnotationsVersion = '2.2'
 
 def junitVersion = '4.10'
 def robolectricVersion = '1.0'
-def androidVersion = '2.2.1'
+def androidVersion = '2.1.2'
 def mockitoVersion = '1.8.5'
 
 dependencies {
